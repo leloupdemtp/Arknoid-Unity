@@ -60,25 +60,20 @@ public class CS_PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.CompareTag("Ball")) 
         {
             Rigidbody2D ballRB = collision.gameObject.GetComponent<Rigidbody2D>();
-            Vector3 hitPoint = collision.contacts[0].point;
-            Vector3 Player = this.gameObject.transform.position;
-            Vector3 paddleCenter = new Vector3(Player.x, Player.y);
+
+            // reset le speed
 
             ballRB.velocity = Vector2.zero;
 
-            float distance = paddleCenter.x - hitPoint.x;
+            // distance point impacte
+            float distance = this.transform.position.x - collision.contacts[0].point.x;
 
-            if (hitPoint.x < paddleCenter.x)
-            {
-                ballRB.AddForce( new Vector2(-(Mathf.Abs(distance * 200)), CS_BallManager.Instance.ballSpeed));
-            }
-            else
-            {
-                ballRB.AddForce (new Vector2(Mathf.Abs(distance * 200), CS_BallManager.Instance.ballSpeed));
-            }
+            // envoie une force dans la direction appropriée
+            ballRB.AddForce(new Vector2(Mathf.Sign(distance) * -Mathf.Abs(distance * 200), CS_BallManager.Instance.ballSpeed));
+
         }
     }
 

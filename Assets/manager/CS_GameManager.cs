@@ -1,6 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CS_GameManager : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class CS_GameManager : MonoBehaviour
     public static CS_GameManager Instance => instance;
 
     private void Awake()
-    {  
+    {
         if (instance != null)
         {
             Destroy(gameObject);
@@ -23,7 +25,46 @@ public class CS_GameManager : MonoBehaviour
 
     }
     #endregion
+    public GameObject gameOverScren;
+    public int ManyLives = 3;
+    public int Lives { get; set; }
+    public bool IsGameStarted { get; set; }
 
-   public bool IsGameStarted { get;  set; }
+    public TextMeshProUGUI ScoreBoard;
+
+    private void Start()
+    {
+        Screen.SetResolution(550, 950, false);
+        CS_ball.OnBallDelete += OnBallDelete;
+        Lives = ManyLives;
+    
+    }
+
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    private void OnBallDelete(CS_ball obj)
+    {
+        if (CS_BallManager.Instance.Balls.Count <= 0)
+        {
+            this.Lives--;
+
+            if (this.Lives < 1)
+            {
+                gameOverScren.SetActive(true);
+            }
+            else
+            {
+                CS_BallManager.Instance.ResetBalls();
+                IsGameStarted = false;
+
+            }
+        }
+
+
+    }
 }
+  
 

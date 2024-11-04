@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CS_ball : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static event Action<CS_ball> OnBallDelete;
+    internal void Delete()
     {
-        
+        OnBallDelete?.Invoke(this);
+        Destroy(gameObject, 1);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }
