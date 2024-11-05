@@ -1,7 +1,11 @@
 using System;
+using System.Collections;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
-using static UnityEngine.ParticleSystem; 
+using static UnityEngine.ParticleSystem;
+using Random = UnityEngine.Random;
+
 
 
 
@@ -11,16 +15,27 @@ public class CS_Bricks : MonoBehaviour
     public int life = 1;
     public static event Action<CS_Bricks> BrickDestruction;
     public ParticleSystem DestroyEffect;
-    public static bool isDestroyed;
-   
+    public static bool isDestroyed = false;
+    public int Chances;
+    public int Reward;
+    public GameObject Multiball;
+    public GameObject Enlarge;
+    public GameObject Decrease;
+    public GameObject OneUp;
 
     private void Start()
     {
         this.sr = this.GetComponent<SpriteRenderer>();
         this.sr.sprite = CS_BrickManager.Instance.Sprites[this.life -1];
+        Chances = Random.Range(1,5) ;
+        
     }
 
-  
+    private void Update()
+    {
+        Reward = Random.Range(1,4);
+        
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -38,8 +53,8 @@ public class CS_Bricks : MonoBehaviour
             BrickDestruction?.Invoke(this);
             Destroy(this.gameObject);
             InstantiateEffect();
-            isDestroyed = true;
-            
+            CS_GameManager.score += 100;
+           
         }
         else
         {
@@ -54,10 +69,35 @@ public class CS_Bricks : MonoBehaviour
         GameObject effect = Instantiate(DestroyEffect.gameObject, brickPos, Quaternion.identity);
 
         ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
-        var mainModule = particleSystem.main; 
+        var mainModule = particleSystem.main;
         mainModule.startColor = sr.color;  //couleur
 
         Destroy(effect, DestroyEffect.main.startLifetime.constant);
+        
+        if (Chances == 1) 
+        {
+            if (Reward == 1)
+            {
+                Instantiate(Multiball, this.gameObject.transform.position, Quaternion.identity);
+            }
+            else if (Reward == 2)
+            {
+                Instantiate(Enlarge, this.gameObject.transform.position, Quaternion.identity);
+            }
+            else if (Reward == 3)
+            {
+                Instantiate(Decrease, this.gameObject.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(OneUp, this.gameObject.transform.position, Quaternion.identity);
+            }
+        }
+        
+        
+        
 
     }
+
+    
 }

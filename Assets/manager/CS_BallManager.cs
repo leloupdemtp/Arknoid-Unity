@@ -29,8 +29,11 @@ public class CS_BallManager : MonoBehaviour
     #endregion
 
     [SerializeField] private CS_ball prefabBall;
-    private CS_ball firstBall;
-    private Rigidbody2D firstBallRB;
+    [SerializeField] private CS_ball secondsBall;
+    public static CS_ball firstBall;
+    public static CS_ball ball;
+    public static Rigidbody2D firstBallRB;
+    public static Rigidbody2D secondsBallRB;
 
     public float ballSpeed = 100f;
    
@@ -43,6 +46,8 @@ public class CS_BallManager : MonoBehaviour
     private void Start()
     {
         InitialisationBall();
+
+        ball = secondsBall;
     }
     private void Update()
     {
@@ -67,7 +72,6 @@ public class CS_BallManager : MonoBehaviour
         
     }
 
- 
         
     
     

@@ -1,10 +1,12 @@
 
 using System.Collections;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
 
 public class CS_GameManager : MonoBehaviour
 {
@@ -29,31 +31,37 @@ public class CS_GameManager : MonoBehaviour
     #endregion
     public GameObject gameOverScren;
     public int ManyLives = 3;
-    public int Lives { get; set; }
+     public static int Lives { get; set; }
     public bool IsGameStarted { get; set; }
     public TextMeshProUGUI LifeUI;
+    public GameObject youWinScreen;
+
+
 
     public TextMeshProUGUI ScoreBoard;
-     public float score;
-
+    static public float score;
+ 
 
     private void Start()
     {
         Screen.SetResolution(550, 950, false);
         CS_ball.OnBallDelete += OnBallDelete;
         Lives = ManyLives;
+        
     
     }
     private void Update()
     {
         LifeUI.text= "Vie:" + Lives;
-        if (CS_Bricks.isDestroyed == true)
-        {
-            score += 100;
-             
-
-        }
         ScoreBoard.text = "Score :" + score;
+
+        if (score ==3600)
+        
+        {
+            youWinScreen.SetActive(true);
+            IsGameStarted = false;
+        }
+        
     }
 
 
@@ -65,9 +73,9 @@ public class CS_GameManager : MonoBehaviour
     {
         if (CS_BallManager.Instance.Balls.Count <= 0)
         {
-            this.Lives--;
+           Lives--;
 
-            if (this.Lives < 1)
+            if (Lives < 1)
             {
                 gameOverScren.SetActive(true);
             }
@@ -81,9 +89,9 @@ public class CS_GameManager : MonoBehaviour
 
 
     }
-   
 
-    
+
+  
 }
   
 
