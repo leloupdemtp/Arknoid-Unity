@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class CS_BallManager : MonoBehaviour
 {
@@ -31,10 +33,12 @@ public class CS_BallManager : MonoBehaviour
     private Rigidbody2D firstBallRB;
 
     public float ballSpeed = 100f;
+   
     
     public List<CS_ball> Balls {  get;  set; }
     public Rigidbody2D Player;
-     
+    
+  
 
     private void Start()
     {
@@ -56,10 +60,17 @@ public class CS_BallManager : MonoBehaviour
                 CS_GameManager.Instance.IsGameStarted = true;
             }
         }
-
+        
        
+
+        
+        
     }
 
+ 
+        
+    
+    
 
 
 

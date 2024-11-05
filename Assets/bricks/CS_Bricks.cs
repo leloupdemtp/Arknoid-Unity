@@ -11,7 +11,7 @@ public class CS_Bricks : MonoBehaviour
     public int life = 1;
     public static event Action<CS_Bricks> BrickDestruction;
     public ParticleSystem DestroyEffect;
-    public bool isDestroyed;
+    public static bool isDestroyed;
    
 
     private void Start()
@@ -39,6 +39,7 @@ public class CS_Bricks : MonoBehaviour
             Destroy(this.gameObject);
             InstantiateEffect();
             isDestroyed = true;
+            
         }
         else
         {

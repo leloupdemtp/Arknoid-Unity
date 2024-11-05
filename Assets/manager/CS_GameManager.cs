@@ -1,8 +1,10 @@
 
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class CS_GameManager : MonoBehaviour
 {
@@ -29,8 +31,10 @@ public class CS_GameManager : MonoBehaviour
     public int ManyLives = 3;
     public int Lives { get; set; }
     public bool IsGameStarted { get; set; }
-    public float score;
+    public TextMeshProUGUI LifeUI;
+
     public TextMeshProUGUI ScoreBoard;
+     public float score;
 
 
     private void Start()
@@ -42,16 +46,15 @@ public class CS_GameManager : MonoBehaviour
     }
     private void Update()
     {
-        ScoreBoard.text = "Score :" + score;
-    }
-    private void Score(CS_Bricks bricks)
-    {
-       if ( bricks.isDestroyed == true) 
+        LifeUI.text= "Vie:" + Lives;
+        if (CS_Bricks.isDestroyed == true)
         {
             score += 100;
-        }
-    }
+             
 
+        }
+        ScoreBoard.text = "Score :" + score;
+    }
 
 
     public void restartGame()
@@ -78,6 +81,9 @@ public class CS_GameManager : MonoBehaviour
 
 
     }
+   
+
+    
 }
   
 
