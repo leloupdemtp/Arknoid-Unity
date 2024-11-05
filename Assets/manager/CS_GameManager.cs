@@ -29,8 +29,9 @@ public class CS_GameManager : MonoBehaviour
     public int ManyLives = 3;
     public int Lives { get; set; }
     public bool IsGameStarted { get; set; }
-
+    public float score;
     public TextMeshProUGUI ScoreBoard;
+
 
     private void Start()
     {
@@ -39,6 +40,18 @@ public class CS_GameManager : MonoBehaviour
         Lives = ManyLives;
     
     }
+    private void Update()
+    {
+        ScoreBoard.text = "Score :" + score;
+    }
+    private void Score(CS_Bricks bricks)
+    {
+       if ( bricks.isDestroyed == true) 
+        {
+            score += 100;
+        }
+    }
+
 
 
     public void restartGame()
